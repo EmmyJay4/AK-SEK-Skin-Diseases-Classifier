@@ -118,10 +118,15 @@ st.markdown(
 
 st.markdown('<p class="upload-label">Upload a skin lesion image</p>', unsafe_allow_html=True)
 model = load_model()
-uploaded_file = st.file_uploader(" ", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
+uploaded_file = st.file_uploader(" ", label_visibility="collapsed")
 
 if uploaded_file:
-    img = Image.open(uploaded_file)
+    try:
+        img = Image.open(uploaded_file)
+    except Exception:
+        st.error("Couldn't open this file as an image. Please try a JPG, PNG, WEBP, BMP, or similar image format.")
+        st.stop()
+
     st.image(img, use_container_width=True)
 
     with st.spinner("Analyzing lesion pattern..."):
