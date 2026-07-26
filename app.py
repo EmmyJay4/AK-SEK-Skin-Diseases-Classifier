@@ -4,37 +4,78 @@ import tensorflow as tf
 from PIL import Image
 import pathlib
 
-st.set_page_config(page_title="AK vs SEK Skin Lesion Classifier", page_icon="🩺", layout="centered")
+st.set_page_config(page_title="SkinScope | AK-SEK Classifier", page_icon="🧬", layout="centered")
 
 st.markdown("""
 <style>
-    .main-title {
-        font-size: 2.4rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 0.2rem;
-    }
-    .subtitle {
-        text-align: center;
-        color: #6b7280;
-        font-size: 1.05rem;
+    .app-header {
+        border-bottom: 3px solid #1e3a5f;
+        padding-bottom: 1rem;
         margin-bottom: 1.5rem;
     }
-    .result-box {
-        padding: 1.2rem;
-        border-radius: 12px;
+    .app-header h1 {
+        font-size: 2.1rem;
+        font-weight: 900;
+        color: #1e3a5f;
+        margin-bottom: 0.1rem;
+    }
+    .app-header .tag {
+        color: #64748b;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+    .team-strip {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.82rem;
+        color: #94a3b8;
+        margin-top: 0.5rem;
+    }
+    .disclaimer {
+        background: #f1f5f9;
+        border-radius: 8px;
+        padding: 0.9rem 1.1rem;
+        font-size: 0.87rem;
+        color: #475569;
+        margin-bottom: 1.5rem;
+        border-left: 3px solid #94a3b8;
+    }
+    .upload-label {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.3rem;
+    }
+    .verdict {
+        border-radius: 10px;
+        padding: 1.4rem;
+        margin-top: 1.2rem;
+    }
+    .verdict-ak {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+    }
+    .verdict-sek {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+    }
+    .verdict-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #64748b;
+        margin-bottom: 0.2rem;
+    }
+    .verdict-name {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1e293b;
+    }
+    .footer-line {
         text-align: center;
-        margin-top: 1rem;
-        font-size: 1.4rem;
-        font-weight: 700;
-    }
-    .ak-box {
-        background-color: #fee2e2;
-        color: #991b1b;
-    }
-    .sek-box {
-        background-color: #dcfce7;
-        color: #166534;
+        color: #cbd5e1;
+        font-size: 0.78rem;
+        margin-top: 2.5rem;
     }
     footer {visibility: hidden;}
 </style>
@@ -56,38 +97,55 @@ def predict(model, pil_image):
     sek_pct = float(probs[1]) * 100
     return label, ak_pct, sek_pct
 
-st.markdown('<div class="main-title">🩺 AK vs SEK Skin Lesion Classifier</div>', unsafe_allow_html=True)
+st.markdown("""
+<div class="app-header">
+    <div class="tag">Dermatology AI Screening Tool</div>
+    <h1>🧬 SkinScope</h1>
+    <div class="team-strip">
+        <span>📚 GET 324 Mini-Project</span>
+        <span>🏫 Civil Engineering, University of Uyo</span>
+        <span>👥 Group CV14</span>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
 st.markdown(
-    '<div class="subtitle">Upload a skin lesion image to classify it as '
-    '<b>Actinic Keratosis (AK)</b> or <b>Seborrheic Keratoses (SEK)</b></div>',
+    '<div class="disclaimer">⚕️ This tool distinguishes between '
+    '<b>Actinic Keratosis (AK)</b> and <b>Seborrheic Keratoses (SEK)</b> for academic '
+    'demonstration purposes. It is not a substitute for professional medical diagnosis.</div>',
     unsafe_allow_html=True
 )
 
+st.markdown('<p class="upload-label">Upload a skin lesion image</p>', unsafe_allow_html=True)
 model = load_model()
-uploaded_file = st.file_uploader("📤 Upload an image", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader(" ", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
 
 if uploaded_file:
-    col1, col2 = st.columns([1, 1])
+    img = Image.open(uploaded_file)
+    st.image(img, use_container_width=True)
 
+    with st.spinner("Analyzing lesion pattern..."):
+        label, ak_pct, sek_pct = predict(model, img)
+
+    verdict_class = "verdict-ak" if label == "AK" else "verdict-sek"
+    full_name = "Actinic Keratosis" if label == "AK" else "Seborrheic Keratoses"
+
+    st.markdown(f"""
+    <div class="verdict {verdict_class}">
+        <div class="verdict-title">Predicted Condition</div>
+        <div class="verdict-name">{full_name} ({label})</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+    col1, col2 = st.columns(2)
     with col1:
-        img = Image.open(uploaded_file)
-        st.image(img, caption="Uploaded Image", use_container_width=True)
-
+        st.metric("AK likelihood", f"{ak_pct:.1f}%")
     with col2:
-        with st.spinner("Analyzing..."):
-            label, ak_pct, sek_pct = predict(model, img)
+        st.metric("SEK likelihood", f"{sek_pct:.1f}%")
 
-        box_class = "ak-box" if label == "AK" else "sek-box"
-        full_name = "Actinic Keratosis" if label == "AK" else "Seborrheic Keratoses"
-        st.markdown(
-            f'<div class="result-box {box_class}">Prediction: {label}<br>'
-            f'<span style="font-size:0.9rem; font-weight:400;">{full_name}</span></div>',
-            unsafe_allow_html=True
-        )
-
-        st.write("")
-        st.progress(int(ak_pct), text=f"AK: {ak_pct:.1f}%")
-        st.progress(int(sek_pct), text=f"SEK: {sek_pct:.1f}%")
-
-st.markdown("---")
-st.caption("Built with Streamlit • MobileNetV3Small Transfer Learning Model • GET 324 Group CV14")
+st.markdown(
+    '<div class="footer-line">MobileNetV3Small Transfer Learning · 93.8% Test Accuracy · '
+    'Trained on FYP Skin Disease Dataset (Kaggle)</div>',
+    unsafe_allow_html=True
+    )     
