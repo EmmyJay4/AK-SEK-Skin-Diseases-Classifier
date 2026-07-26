@@ -4,7 +4,7 @@ import tensorflow as tf
 from PIL import Image
 import pathlib
 
-st.set_page_config(page_title="SkinScope | AK-SEK Classifier", page_icon="🧬", layout="centered")
+st.set_page_config(page_title="AK vs SEK Skin Lesion Classifier", page_icon="🧬", layout="centered")
 
 st.markdown("""
 <style>
@@ -99,11 +99,11 @@ def predict(model, pil_image):
 
 st.markdown("""
 <div class="app-header">
-    <div class="tag">Dermatology AI Screening Tool</div>
-    <h1>🧬 SkinScope</h1>
+    <h1>🧬 AK vs SEK Skin Lesion Classifier</h1>
+    <div class="tag">Actinic Keratosis vs Seborrheic Keratoses</div>
     <div class="team-strip">
         <span>📚 GET 324 Mini-Project</span>
-        <span>🏫 Civil Engineering, University of Uyo</span>
+        <span>🏫 Department of Civil Engineering, University of Uyo</span>
         <span>👥 Group CV14</span>
     </div>
 </div>
@@ -148,4 +148,4 @@ st.markdown(
     '<div class="footer-line">MobileNetV3Small Transfer Learning · 93.8% Test Accuracy · '
     'Trained on FYP Skin Disease Dataset (Kaggle)</div>',
     unsafe_allow_html=True
-    )     
+    )
