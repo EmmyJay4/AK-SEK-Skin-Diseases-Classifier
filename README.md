@@ -19,8 +19,8 @@ pip install -r requirements.txt
 streamlit run app.py
 
 ## Team
-Etokakpan, Nkutmfon okokon.
-23/EG/CV/006
+Isong, Oyokunyi Etim-James 
+23/EG/CV/066
 
 ## Challenges
 - Add challenges encountered
