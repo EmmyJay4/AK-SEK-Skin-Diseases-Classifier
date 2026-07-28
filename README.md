@@ -22,5 +22,8 @@ streamlit run app.py
 Isong, Oyokunyi Etim-James 
 23/EG/CV/066
 
+Timothy, Ntiense Ima-Abasi 
+23/EG/Cv/036
+
 ## Challenges
 - Add challenges encountered
