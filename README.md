@@ -19,7 +19,8 @@ pip install -r requirements.txt
 streamlit run app.py
 
 ## Team
-- Add names and registration numbers here
+Etokakpan, Nkutmfon okokon.
+23/EG/CV/006
 
 ## Challenges
 - Add challenges encountered
