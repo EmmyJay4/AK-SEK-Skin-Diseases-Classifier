@@ -21,7 +21,8 @@ streamlit run app.py
 ## Team
 Isong, Oyokunyi Etim-James 
 23/EG/CV/066
-
+Idobo, Goodnews Ita
+23/EG/CV/056
 Timothy, Ntiense Ima-Abasi 
 23/EG/Cv/036
 
