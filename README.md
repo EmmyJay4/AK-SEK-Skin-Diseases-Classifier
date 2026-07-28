@@ -25,6 +25,7 @@ Idobo, Goodnews Ita
 23/EG/CV/056
 Timothy, Ntiense Ima-Abasi 
 23/EG/Cv/036
-
+Thompson,Emaediong Ubong 
+23/EG/CV/046
 ## Challenges
 - Add challenges encountered
