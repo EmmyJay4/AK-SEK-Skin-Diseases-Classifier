@@ -29,3 +29,4 @@ Thompson,Emaediong Ubong 23/EG/CV/046
 George, Richard Basil 23/EG/CV/076
 ## Challenges
 - Add challenges encountered
+Jack George Boma 23/EG/CV/086
