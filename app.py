@@ -3,8 +3,7 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 import pathlib
-
-st.set_page_config(page_title="AK vs SEK Skin Lesion Classifier", page_icon="🧬", layout="centered")
+st.set_page_config(page_title="AK vs SEK Skin Lesion Classifier", page_icon="🩺", layout="centered")
 
 st.markdown("""
 <style>
@@ -99,7 +98,7 @@ def predict(model, pil_image):
 
 st.markdown("""
 <div class="app-header">
-    <h1>🧬 AK vs SEK Skin Lesion Classifier</h1>
+    <h1>🩺 AK vs SEK Skin Lesion Classifier</h1>
     <div class="tag">Actinic Keratosis vs Seborrheic Keratoses</div>
     <div class="team-strip">
         <span>📚 GET 324 Mini-Project</span>
