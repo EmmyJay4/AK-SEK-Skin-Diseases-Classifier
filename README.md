@@ -27,7 +27,6 @@ Training used GPU acceleration on Google Colab, with data augmentation (flip, ro
 3. Instantly view the predicted class (AK or SEK) with confidence scores for both.
 
 ## Run Locally
-## Run Locally
 pip install -r requirements.txt
 streamlit run app.py
 
